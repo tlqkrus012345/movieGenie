@@ -1,6 +1,6 @@
 package com.project.moviegenie.member;
 
-import com.project.moviegenie.member.controller.dto.MemberSignUpRequest;
+import com.project.moviegenie.member.dto.MemberSignUpRequest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 

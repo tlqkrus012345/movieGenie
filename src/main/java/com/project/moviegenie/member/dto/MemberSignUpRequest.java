@@ -1,15 +1,20 @@
-package com.project.moviegenie.member.controller.dto;
+package com.project.moviegenie.member.dto;
 
 import com.project.moviegenie.member.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class MemberSignUpRequest {
 
     @NotBlank
@@ -26,10 +31,10 @@ public class MemberSignUpRequest {
     @Pattern( message = "특수문자와 공백을 허용하지 않으며 2글자 이상 16글자 이하로 작성해주세요.",
               regexp = "^[a-zA-Z\\d가-힣]{2,16}$")
     private String nickName;
-    public static Member toEntity(MemberSignUpRequest dto) {
+    public static Member toEntity(MemberSignUpRequest dto, PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(dto.getEmail())
-                .password(dto.getPassword())
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .nickName(dto.getNickName())
                 .build();
     }
