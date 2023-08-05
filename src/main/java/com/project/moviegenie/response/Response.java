@@ -11,4 +11,7 @@ public class Response<T> {
     public static <T> Response<T> success(T result) {
         return new Response<>("SUCCESS", result);
     }
+    public static <T> Response error(String errorCode, T result) {
+        return new Response<>(errorCode, result);
+    }
 }
