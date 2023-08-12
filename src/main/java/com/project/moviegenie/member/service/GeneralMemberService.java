@@ -5,6 +5,7 @@ import com.project.moviegenie.exception.MovieGenieAppException;
 import com.project.moviegenie.member.domain.Member;
 import com.project.moviegenie.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +25,21 @@ public class GeneralMemberService implements MemberService{
         }
 
         return memberRepository.save(member);
+    }
+
+    @Override
+    public Member findMemberByEmail(String email) {
+        return memberRepository.findMemberByEmail(email).get();
+    }
+
+    @Override
+    public void isValidMember(Member loginMember, PasswordEncoder passwordEncoder) {
+        Member findMember = memberRepository.findMemberByEmail(loginMember.getEmail())
+                .orElseThrow(() -> new MovieGenieAppException(ErrorCode.NOT_FOUND_EMAIL));
+
+        if (!passwordEncoder.matches(loginMember.getPassword(), findMember.getPassword())) {
+            throw new MovieGenieAppException(ErrorCode.NOT_FOUND_PASSWORD);
+        }
     }
 
     @Override
