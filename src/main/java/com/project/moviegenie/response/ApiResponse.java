@@ -25,7 +25,9 @@ public class ApiResponse<T> {
     public static ApiResponse<String> error(String resultCode, String message) {
         return new ApiResponse<>(resultCode, message,null);
     }
-
+    public static ApiResponse<?> success() {
+        return new ApiResponse<>("SUCCESS",null , null);
+    }
     /**
      *  에러 목록의 각 항목을 나타내는 내부 클래스
      */
