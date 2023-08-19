@@ -1,6 +1,7 @@
 package com.project.moviegenie.member.dto;
 
 import com.project.moviegenie.member.domain.Member;
+import com.project.moviegenie.member.domain.MemberRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class MemberSignUpRequest {
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .nickName(dto.getNickName())
+                .memberRole(MemberRole.MEMBER)
                 .build();
     }
 }
