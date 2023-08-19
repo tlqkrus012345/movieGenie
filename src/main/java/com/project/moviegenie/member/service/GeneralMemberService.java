@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class GeneralMemberService implements MemberService{
@@ -28,8 +30,8 @@ public class GeneralMemberService implements MemberService{
     }
 
     @Override
-    public Member findMemberByEmail(String email) {
-        return memberRepository.findMemberByEmail(email).get();
+    public Optional<Member> findMemberByEmail(String email) {
+        return memberRepository.findMemberByEmail(email);
     }
 
     @Override

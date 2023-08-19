@@ -33,7 +33,7 @@ public class MemberController {
     public ApiResponse<MemberLoginResponse> login(@RequestBody @Valid MemberLoginRequest dto) {
         memberService.isValidMember(MemberLoginRequest.toEntity(dto), passwordEncoder);
 
-        Member loginMember = memberService.findMemberByEmail(dto.getEmail());
+        Member loginMember = memberService.findMemberByEmail(dto.getEmail()).get();
         loginService.login(loginMember.getId());
 
         return ApiResponse.success(MemberLoginResponse.toDto(loginMember.getNickName()));
