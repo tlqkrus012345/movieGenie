@@ -1,5 +1,6 @@
 package com.project.moviegenie.member.domain;
 
+import com.project.moviegenie.config.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Member implements Serializable {
+public class Member extends BaseTimeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
