@@ -1,5 +1,6 @@
 package com.project.moviegenie.member.controller;
 
+import com.project.moviegenie.exception.ErrorCode;
 import com.project.moviegenie.member.dto.MemberLoginRequest;
 import com.project.moviegenie.member.dto.MemberLoginResponse;
 import com.project.moviegenie.member.dto.MemberSignUpRequest;
@@ -29,6 +30,14 @@ public class MemberController {
         return ApiResponse.success(MemberSignUpResponse.toDto(memberService.signUp(requestMember)));
     }
 
+    @GetMapping("/duplicated/{email}")
+    public ApiResponse<?> isDuplicatedEmail(@PathVariable String email) {
+        boolean duplicatedEmail = memberService.isDuplicatedEmail(email);
+
+        if (duplicatedEmail) return ApiResponse.error(String.valueOf(ErrorCode.DUPLICATED_EMAIL), "중복된 이메일입니다.");
+
+        return ApiResponse.success();
+    }
     @PostMapping("login")
     public ApiResponse<MemberLoginResponse> login(@RequestBody @Valid MemberLoginRequest dto) {
         memberService.isValidMember(MemberLoginRequest.toEntity(dto), passwordEncoder);
