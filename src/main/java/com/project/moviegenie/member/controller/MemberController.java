@@ -29,15 +29,6 @@ public class MemberController {
 
         return ApiResponse.success(MemberSignUpResponse.toDto(memberService.signUp(requestMember)));
     }
-
-    @GetMapping("/duplicated/{email}")
-    public ApiResponse<?> isDuplicatedEmail(@PathVariable String email) {
-        boolean duplicatedEmail = memberService.isDuplicatedEmail(email);
-
-        if (duplicatedEmail) return ApiResponse.error(String.valueOf(ErrorCode.DUPLICATED_EMAIL), "중복된 이메일입니다.");
-
-        return ApiResponse.success();
-    }
     @PostMapping("login")
     public ApiResponse<MemberLoginResponse> login(@RequestBody @Valid MemberLoginRequest dto) {
         memberService.isValidMember(MemberLoginRequest.toEntity(dto), passwordEncoder);
@@ -51,6 +42,24 @@ public class MemberController {
     @GetMapping("logout")
     public ApiResponse<?> logout() {
         loginService.logout();
+
+        return ApiResponse.success();
+    }
+
+    @GetMapping("/duplicated/{email}")
+    public ApiResponse<?> isDuplicatedEmail(@PathVariable String email) {
+        boolean duplicatedEmail = memberService.isDuplicatedEmail(email);
+
+        if (duplicatedEmail) return ApiResponse.error(String.valueOf(ErrorCode.DUPLICATED_EMAIL), "중복된 이메일입니다.");
+
+        return ApiResponse.success();
+    }
+
+    @GetMapping("/duplicated/{nickName}")
+    public ApiResponse<?> isDuplicatedNickName(@PathVariable String nickName) {
+        boolean duplicatedNickName = memberService.isDuplicatedNickName(nickName);
+
+        if (duplicatedNickName) return ApiResponse.error(String.valueOf(ErrorCode.DUPLICATED_NICKNAME), "중복된 닉네임입니다.");
 
         return ApiResponse.success();
     }
