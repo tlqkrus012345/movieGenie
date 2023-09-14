@@ -1,4 +1,4 @@
-package com.project.moviegenie.chatgpt;
+package com.project.moviegenie.searchmovie;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/moviegenie")
 public class MovieGenieController {
+
     private final MovieGenieService movieGenieService;
 
     @PostMapping("/ask")
