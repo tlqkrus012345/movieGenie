@@ -1,5 +1,6 @@
 package com.project.moviegenie.member;
 
+import com.project.moviegenie.member.service.MemberService;
 import com.project.moviegenie.member.service.SessionLoginService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,13 +16,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SessionLoginServiceTest {
 
     private SessionLoginService loginService;
+    private MemberService memberService;
 
     private MockHttpSession httpSession;
 
     @BeforeEach
     void setUp() {
         httpSession = new MockHttpSession();
-        loginService = new SessionLoginService(httpSession);
+        loginService = new SessionLoginService(httpSession, memberService);
     }
 
     @DisplayName("세션 로그인 성공 테스트")
