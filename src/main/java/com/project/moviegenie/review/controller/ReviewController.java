@@ -39,4 +39,11 @@ public class ReviewController {
     public ApiResponse<MovieReviewResponse> findReviewById(@PathVariable Long reviewId) {
         return ApiResponse.success(MovieReviewResponse.toDto(reviewService.findReviewById(reviewId)));
     }
+
+    @DeleteMapping("/{reviewId}")
+    public ApiResponse<?> deleteReview(@PathVariable Long reviewId) {
+        reviewService.deleteReview(reviewId);
+
+        return ApiResponse.success();
+    }
 }

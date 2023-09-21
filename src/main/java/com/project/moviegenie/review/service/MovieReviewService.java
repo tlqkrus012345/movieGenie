@@ -3,6 +3,7 @@ package com.project.moviegenie.review.service;
 import com.project.moviegenie.exception.ErrorCode;
 import com.project.moviegenie.exception.MovieGenieAppException;
 import com.project.moviegenie.member.domain.Member;
+import com.project.moviegenie.member.service.LoginService;
 import com.project.moviegenie.review.domain.Review;
 import com.project.moviegenie.review.domain.ReviewRepository;
 import com.project.moviegenie.review.dto.MovieReviewRequest;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MovieReviewService implements ReviewService{
 
     private final ReviewRepository reviewRepository;
+    private final LoginService loginService;
     @Override
     @Transactional
     public Review createReview(Review review) {
@@ -37,6 +39,14 @@ public class MovieReviewService implements ReviewService{
     }
 
     @Override
+    public void deleteReview(Long id) {
+        String writerEmail = findReviewById(id).getWriter().getEmail();
+        if (isMatchedWriter(writerEmail)) {
+            reviewRepository.deleteById(id);
+        }
+    }
+
+    @Override
     public Genre getGenreFromString(String stringGenre) {
         for (Genre genre : Genre.values()) {
             if (genre.name().equalsIgnoreCase(stringGenre)) {
@@ -44,6 +54,15 @@ public class MovieReviewService implements ReviewService{
             }
         }
         throw new MovieGenieAppException(ErrorCode.NOT_FOUND_GENRE);
+    }
+
+    public boolean isMatchedWriter(String writerEmail) {
+        Member loginMember = loginService.getLoginMember();
+
+        if (writerEmail.equals(loginMember.getEmail())) {
+            return true;
+        }
+        return false;
     }
 
 }

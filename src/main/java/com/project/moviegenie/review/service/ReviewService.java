@@ -10,5 +10,6 @@ public interface ReviewService {
     Review createReview(Review review);
     Review updateReview(Long reviewId, MovieReviewRequest request);
     Review findReviewById(Long id);
+    void deleteReview(Long id);
     Genre getGenreFromString(String genre);
 }
