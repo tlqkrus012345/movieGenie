@@ -3,10 +3,7 @@ package com.project.moviegenie.review.dto;
 import com.project.moviegenie.member.domain.Member;
 import com.project.moviegenie.review.domain.Review;
 import com.project.moviegenie.searchmovie.domain.Genre;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter

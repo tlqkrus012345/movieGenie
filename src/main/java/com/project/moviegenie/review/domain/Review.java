@@ -1,6 +1,7 @@
 package com.project.moviegenie.review.domain;
 
 import com.project.moviegenie.member.domain.Member;
+import com.project.moviegenie.review.dto.MovieReviewRequest;
 import com.project.moviegenie.searchmovie.domain.Genre;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,5 +38,11 @@ public class Review {
         this.genre = genre;
         this.writer = writer;
         this.context = context;
+    }
+
+    public void updateReview(MovieReviewRequest request, Genre genre) {
+        this.title = request.getTitle();
+        this.context = request.getContext();
+        this.genre = genre;
     }
 }

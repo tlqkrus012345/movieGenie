@@ -3,6 +3,7 @@ package com.project.moviegenie.review;
 import com.project.moviegenie.exception.MovieGenieAppException;
 import com.project.moviegenie.review.domain.Review;
 import com.project.moviegenie.review.domain.ReviewRepository;
+import com.project.moviegenie.review.dto.MovieReviewRequest;
 import com.project.moviegenie.review.service.MovieReviewService;
 import com.project.moviegenie.searchmovie.domain.Genre;
 import org.assertj.core.api.Assertions;
@@ -15,11 +16,13 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

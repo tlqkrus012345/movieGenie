@@ -9,10 +9,7 @@ import com.project.moviegenie.review.dto.MovieReviewResponse;
 import com.project.moviegenie.review.service.ReviewService;
 import com.project.moviegenie.searchmovie.domain.Genre;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -29,5 +26,17 @@ public class ReviewController {
         Review newReview = MovieReviewRequest.toEntity(request, loginMember, genre);
 
         return ApiResponse.success(MovieReviewResponse.toDto(reviewService.createReview(newReview)));
+    }
+
+    @PutMapping("/{reviewId}")
+    public ApiResponse<MovieReviewResponse> updateReview(@PathVariable Long reviewId, @RequestBody MovieReviewRequest request) {
+        Review updateReview = reviewService.updateReview(reviewId, request);
+
+        return ApiResponse.success(MovieReviewResponse.toDto(updateReview));
+    }
+
+    @GetMapping("/{reviewId}")
+    public ApiResponse<MovieReviewResponse> findReviewById(@PathVariable Long reviewId) {
+        return ApiResponse.success(MovieReviewResponse.toDto(reviewService.findReviewById(reviewId)));
     }
 }
