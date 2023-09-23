@@ -1,5 +1,6 @@
 package com.project.moviegenie.review.domain;
 
+import com.project.moviegenie.config.BaseTimeEntity;
 import com.project.moviegenie.member.domain.Member;
 import com.project.moviegenie.review.dto.MovieReviewRequest;
 import com.project.moviegenie.searchmovie.domain.Genre;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "reviews")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Review {
+public class Review extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
