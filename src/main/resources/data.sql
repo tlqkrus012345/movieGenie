@@ -1,5 +1,5 @@
 
-insert into MEMBERS (id, email, password, nick_name, member_role, created_date, modified_date) values (1, 'bkelner0@chron.com', 'sZ0/.3)yVs|E>,t?', 'Kelner', 'MEMBER', '2022-09-06 20:34:53', '2023-07-15 04:35:00');
+insert into MEMBERS (id, email, password, nick_name, member_role, created_date, modified_date) values (1, 'test@email.com', 'a123456789', 'test', 'MEMBER', '2022-09-06 20:34:53', '2023-07-15 04:35:00');
 insert into MEMBERS (id, email, password, nick_name, member_role, created_date, modified_date) values (2, 'cfrangello1@japanpost.jp', 'oB7''dG9?kf`U=', 'Frangello', 'MEMBER', '2023-02-15 04:10:57', '2023-09-05 01:15:43');
 insert into MEMBERS (id, email, password, nick_name, member_role, created_date, modified_date) values (3, 'bstegers2@gravatar.com', 'hO5|L))k(`yeo', 'Stegers', 'MEMBER', '2023-04-02 16:40:36', '2023-07-31 11:18:26');
 insert into MEMBERS (id, email, password, nick_name, member_role, created_date, modified_date) values (4, 'fdax3@netscape.com', 'sN9*tiPp3k.)=n', 'Dax', 'MEMBER', '2022-11-20 15:37:48', '2022-12-30 08:47:15');
