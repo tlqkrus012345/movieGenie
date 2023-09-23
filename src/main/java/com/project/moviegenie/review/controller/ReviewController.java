@@ -1,5 +1,6 @@
 package com.project.moviegenie.review.controller;
 
+import com.project.moviegenie.exception.ErrorCode;
 import com.project.moviegenie.member.domain.Member;
 import com.project.moviegenie.member.service.LoginService;
 import com.project.moviegenie.response.ApiResponse;
@@ -10,6 +11,8 @@ import com.project.moviegenie.review.service.ReviewService;
 import com.project.moviegenie.searchmovie.domain.Genre;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -35,6 +38,11 @@ public class ReviewController {
         return ApiResponse.success(MovieReviewResponse.toDto(updateReview));
     }
 
+    @GetMapping
+    public ApiResponse<List<MovieReviewResponse>> findAllReview() {
+        return ApiResponse.success(reviewService.findAllReview());
+    }
+
     @GetMapping("/{reviewId}")
     public ApiResponse<MovieReviewResponse> findReviewById(@PathVariable Long reviewId) {
         return ApiResponse.success(MovieReviewResponse.toDto(reviewService.findReviewById(reviewId)));
@@ -45,5 +53,13 @@ public class ReviewController {
         reviewService.deleteReview(reviewId);
 
         return ApiResponse.success();
+    }
+
+    @GetMapping("/validate/{reviewId}")
+    public ApiResponse<?> validateMemberAndReview(@PathVariable Long reviewId) {
+        if (reviewService.validateMemberAndReview(reviewId)) {
+            return ApiResponse.success();
+        }
+        return ApiResponse.error(String.valueOf(ErrorCode.VALIDATION_ERROR), "수정, 삭제가 불가능합니다.");
     }
 }
