@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,8 +18,17 @@ public class MovieReviewResponse {
     private String context;
     private String genre;
     private String writer;
+    private String registerDate;
 
     public static MovieReviewResponse toDto(Review review) {
-        return new MovieReviewResponse(review.getTitle(), review.getContext(), review.getGenre().name(), review.getWriter().getNickName());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String formattedDate = review.getCreatedDate().format(dateTimeFormatter);
+
+        return new MovieReviewResponse(
+                review.getTitle(),
+                review.getContext(),
+                review.getGenre().name(),
+                review.getWriter().getNickName(),
+                formattedDate);
     }
 }
