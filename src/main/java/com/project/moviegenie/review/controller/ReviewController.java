@@ -10,9 +10,11 @@ import com.project.moviegenie.review.dto.MovieReviewResponse;
 import com.project.moviegenie.review.service.ReviewService;
 import com.project.moviegenie.searchmovie.domain.Genre;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -39,8 +41,9 @@ public class ReviewController {
     }
 
     @GetMapping
-    public ApiResponse<List<MovieReviewResponse>> findAllReview() {
-        return ApiResponse.success(reviewService.findAllReview());
+    public ApiResponse<Page<MovieReviewResponse>> findAllReview(@PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC)
+                                                                    Pageable pageable) {
+        return ApiResponse.success(reviewService.findAllReview(pageable));
     }
 
     @GetMapping("/{reviewId}")

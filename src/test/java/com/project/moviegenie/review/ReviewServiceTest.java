@@ -1,9 +1,12 @@
 package com.project.moviegenie.review;
 
 import com.project.moviegenie.exception.MovieGenieAppException;
+import com.project.moviegenie.member.domain.Member;
+import com.project.moviegenie.member.domain.MemberRole;
 import com.project.moviegenie.review.domain.Review;
 import com.project.moviegenie.review.domain.ReviewRepository;
 import com.project.moviegenie.review.dto.MovieReviewRequest;
+import com.project.moviegenie.review.dto.MovieReviewResponse;
 import com.project.moviegenie.review.service.MovieReviewService;
 import com.project.moviegenie.searchmovie.domain.Genre;
 import org.assertj.core.api.Assertions;
@@ -16,13 +19,19 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,6 +54,30 @@ public class ReviewServiceTest {
         assertThat(requestReview.getWriter()).isEqualTo(savedReview.getWriter());
 
     }
+
+    @Test
+    @DisplayName("정상적으로 요청을 하면 Pagination이 적용하여 10개씩 보여주며 총 페이지는 2이다.")
+    void findAllReview() {
+        Member member = Member.builder().email("test@email.com").password("a12345678").nickName("test").memberRole(MemberRole.MEMBER).build();
+        List<Review> reviewList = new ArrayList<>();
+        for (int i=0; i<11; i++) {
+            Review review = Review.builder().title("title" + i).context("context").writer(member).genre(Genre.ACTION).build();
+            reviewList.add(review);
+        }
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        when(reviewRepository.findAll(pageable)).thenReturn(new PageImpl<>(reviewList, pageable, reviewList.size()));
+
+        Page<MovieReviewResponse> resultPage = movieReviewService.findAllReview(pageable);
+
+        assertEquals(11, resultPage.getTotalElements());
+        assertEquals(2, resultPage.getTotalPages());
+        assertEquals(10, resultPage.getSize());
+        assertFalse(resultPage.hasPrevious());
+        assertFalse(resultPage.getContent().isEmpty());
+    }
+
     @Test
     @DisplayName("String으로 들어온 장르를 Enum 타입으로 변환한다")
     void getGenreFromString() {

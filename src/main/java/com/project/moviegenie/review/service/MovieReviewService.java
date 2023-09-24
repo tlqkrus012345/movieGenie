@@ -10,11 +10,10 @@ import com.project.moviegenie.review.dto.MovieReviewRequest;
 import com.project.moviegenie.review.dto.MovieReviewResponse;
 import com.project.moviegenie.searchmovie.domain.Genre;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,10 +43,8 @@ public class MovieReviewService implements ReviewService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<MovieReviewResponse> findAllReview() {
-        List<Review> allReview = reviewRepository.findAll();
-
-        List<MovieReviewResponse> allReviewResponse = allReview.stream()
+    public Page<MovieReviewResponse> findAllReview(Pageable pageable) {
+        return reviewRepository.findAll(pageable)
                 .map(review -> {
                     MovieReviewResponse response = new MovieReviewResponse();
                     response.setTitle(review.getTitle());
@@ -55,11 +52,7 @@ public class MovieReviewService implements ReviewService{
                     response.setWriter(review.getWriter().getNickName());
                     response.setGenre(review.getGenre().name());
                     return response;
-                })
-                .collect(Collectors.toList());
-
-        return allReviewResponse;
-
+                });
     }
 
     @Override
