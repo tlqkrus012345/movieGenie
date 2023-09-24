@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
+
 @Service
 @RequiredArgsConstructor
 public class MovieReviewService implements ReviewService{
@@ -46,11 +48,15 @@ public class MovieReviewService implements ReviewService{
     public Page<MovieReviewResponse> findAllReview(Pageable pageable) {
         return reviewRepository.findAll(pageable)
                 .map(review -> {
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                    String formattedDate = review.getCreatedDate().format(dateTimeFormatter);
+
                     MovieReviewResponse response = new MovieReviewResponse();
                     response.setTitle(review.getTitle());
                     response.setContext(review.getContext());
                     response.setWriter(review.getWriter().getNickName());
                     response.setGenre(review.getGenre().name());
+                    response.setRegisterDate(formattedDate);
                     return response;
                 });
     }
