@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface MemberService {
     Member signUp(Member member);
     Optional<Member> findMemberByEmail(String email);
+    Member findMemberById(Long id);
     void isValidMember(Member member, PasswordEncoder passwordEncoder);
     boolean isDuplicatedEmail(String email);
     boolean isDuplicatedNickName(String nickName);

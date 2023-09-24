@@ -35,6 +35,11 @@ public class GeneralMemberService implements MemberService{
     }
 
     @Override
+    public Member findMemberById(Long id) {
+        return memberRepository.findById(id).orElseThrow(() -> new MovieGenieAppException(ErrorCode.NOT_FOUND_MEMBER));
+    }
+
+    @Override
     public void isValidMember(Member loginMember, PasswordEncoder passwordEncoder) {
         Member findMember = memberRepository.findMemberByEmail(loginMember.getEmail())
                 .orElseThrow(() -> new MovieGenieAppException(ErrorCode.NOT_FOUND_EMAIL));
